@@ -9,16 +9,26 @@ const schema = buildSchema(`
         price:Float!
         date:String!
     }
+    type Booking{
+        id:ID,
+        eventId:Int!,
+        userUsername:String!
+    }
+    input BookingInput{
+        eventId:Int!,
+        userUsername:String!
+    }
     type User{
-    username:String!
+        username:String!
     }
     type UserEvents{
-    username:String!
-    events:[Event!]!
+        username:String!
+        events:[Event!]!
+        bookings:[Booking!]!
     }
     input UserInput{
-    username:String!,
-    password:String!
+        username:String!,
+        password:String!
     }
     input InputEvent{
         title:String!
@@ -27,13 +37,19 @@ const schema = buildSchema(`
         date:String!
         userUsername:String!
     }
+    input cancelbooking {
+        id:ID!
+    }
     type query{
         event : [Event!]!
         user : [UserEvents!]!
+        book : [Booking!]!
     }
     type create{
         create(event:InputEvent):Event
         createUser(user:UserInput):User
+        createBooking(book:BookingInput):Booking
+        cancelbooking(cancel:cancelbooking):Boolean
     }
     schema {
         query:query,

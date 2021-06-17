@@ -4,8 +4,20 @@ const { Sequelize, DataTypes, Op } = require("sequelize");
 
 
 const getusers = async () => {
+    console.log("hello")
     const data = await db.users.findAll({
-      include:[db.events]
+      include:[{
+        model:db.events,
+        attributes: [
+            "id",
+            "title",
+            "description",
+            "price"
+        ],
+      },{
+        model:db.bookings
+      }],
+
     });
     console.log(data);
     return data;
