@@ -1,0 +1,21 @@
+.Main{
+    @mixin fun(){
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:space-between;
+    }
+    background:#ccc;
+    padding:1rem 0rem;
+    @include fun();
+    .innermain{
+        @include fun();
+        .childmain{
+            padding:0.2rem 0.3rem;
+            margin:0rem 1rem 0rem 1rem;
+            &:hover{
+                background-color:rgb(126, 113, 184);
+                border-radius:0.6rem;
+            }
+        }
+    }
+}

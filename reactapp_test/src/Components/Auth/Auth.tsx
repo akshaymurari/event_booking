@@ -57,7 +57,7 @@ const Auth = () => {
         else{
             console.log(data.data.data.createUser);
             localStorage.setItem("token",data.data.data.createUser.token);
-            H.push("/booking");
+            H.push("/main");
         }
       } catch (error) {
         console.log(error);
@@ -95,7 +95,7 @@ const Auth = () => {
             else{
                 console.log(data.data.data.login);
                 localStorage.setItem("token",data.data.data.login.token);
-                H.push("/booking");
+                H.push("/main");
             }
             console.log(data);
           } catch (error) {
