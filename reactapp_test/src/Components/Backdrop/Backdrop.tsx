@@ -36,6 +36,7 @@ const Backdrop = () => {
                             price:${new Number(data.price)},
                             date:"${data.date}",
                             userUsername:"${data.userUsername}"
+                            token:"${localStorage.getItem('token')}"
                         }){
                             title
                             description

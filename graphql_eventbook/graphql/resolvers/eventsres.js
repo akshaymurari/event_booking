@@ -1,11 +1,18 @@
 const db = require("../../databasesync/syncdb");
 
 const createevents = async (args) => {
-    const data = await db.events.create({
-      ...args.event,
-    });
-    console.log(data.dataValues);
-  return data.dataValues;
+    console.log(args);
+    const token = args.event.token;
+    args.event["token"]=undefined;
+    if(require("./auth")(token)){
+      const data = await db.events.create({
+        ...args.event,
+      });
+      console.log(data.dataValues);
+      return data.dataValues;
+    }else{
+      throw new Error("invalid user");
+    }
 }
 
 const getevents = async () => {

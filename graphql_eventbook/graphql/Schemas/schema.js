@@ -40,6 +40,7 @@ const schema = buildSchema(`
         price:Float!
         date:String!
         userUsername:String!
+        token:String!
     }
     input cancelbooking {
         id:ID!

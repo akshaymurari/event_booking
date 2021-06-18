@@ -1,8 +1,60 @@
 import React from 'react';
+import {graphql} from "../../App";
 import Backdrop from "../Backdrop/Backdrop";
-
+import axios from "axios";
+import {useHistory} from "react-router-dom";
 const Events = () => {
+    const H = useHistory();
     const [display,setdisplay] = React.useState<string>("none");
+    const [eventsdata,seteventsdata] = React.useState([]);
+    interface events {
+        id:string,
+        userUsername:string,
+        title:string,
+        description:string,
+        price:number,
+        date:string
+    }
+    React.useEffect(()=>{
+        const getevents = async () => {
+            const body = {
+                query : `
+                    query {
+                        event {
+                            id
+                            userUsername
+                            title
+                            description
+                            price
+                            date
+                        }
+                    }
+                `
+            }
+            try{
+                const result = await axios({
+                    method:"post",
+                    url:graphql,
+                    headers:{
+                        accept:"application/json",
+                        "Content-Type":"application/json"
+                    },
+                    data:body
+                });
+                console.log(result);
+                if(result.data.error){
+                    H.push("/error");
+                }
+                else{
+                    seteventsdata(result.data.data.event);
+                }
+            }catch(error){
+                console.log(error);
+                H.push("/error");
+            }
+        }
+        getevents();
+    },[]);
     return (
         <div>
             <h1>in events</h1>
@@ -24,6 +76,13 @@ const Events = () => {
                 background:"rgba(10, 10, 10, 0.541)"
             }}>
                 <Backdrop />
+            </div>
+            <div className="eventsblog">
+                {
+                    eventsdata.map((ele:events)=>{
+                        
+                    })
+                }
             </div>
         </div>
     )
