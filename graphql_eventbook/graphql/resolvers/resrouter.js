@@ -1,4 +1,4 @@
-const {getusers,createusers} = require("./usersres");
+const {getusers,createusers,login} = require("./usersres");
 
 const {getevents,createevents} = require("./eventsres");
 
@@ -9,5 +9,6 @@ module.exports = {
     event: getevents,
     create: createevents,
     createUser: createusers,
+    login:login,
     ...bookingres
 }

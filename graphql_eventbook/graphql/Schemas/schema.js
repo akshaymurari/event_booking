@@ -1,6 +1,10 @@
 const { buildSchema } = require("graphql");
 
 const schema = buildSchema(`
+    type login {
+        username:String!
+        token:String!
+    }
     type Event {
         id:ID!
         userUsername:String!
@@ -47,9 +51,10 @@ const schema = buildSchema(`
     }
     type create{
         create(event:InputEvent):Event
-        createUser(user:UserInput):User
+        createUser(user:UserInput):login
         createBooking(book:BookingInput):Booking
         cancelbooking(cancel:cancelbooking):Boolean
+        login(login:UserInput):login
     }
     schema {
         query:query,
