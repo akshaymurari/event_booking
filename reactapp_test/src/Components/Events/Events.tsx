@@ -3,10 +3,14 @@ import {graphql} from "../../App";
 import Backdrop from "../Backdrop/Backdrop";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
+import {useDispatch,useSelector} from "react-redux";
+import {rootstate} from "../redux/store";
 const Events = () => {
     const H = useHistory();
+    const eventsdata = useSelector((state:rootstate)=>state.EventReducer);
+    console.log(eventsdata);
+    const dispatch = useDispatch();
     const [display,setdisplay] = React.useState<string>("none");
-    const [eventsdata,seteventsdata] = React.useState([]);
     interface events {
         id:string,
         userUsername:string,
@@ -46,7 +50,7 @@ const Events = () => {
                     H.push("/error");
                 }
                 else{
-                    seteventsdata(result.data.data.event);
+                    dispatch({payload:result.data.data.event,type:"addallevents"});
                 }
             }catch(error){
                 console.log(error);
@@ -77,10 +81,35 @@ const Events = () => {
             }}>
                 <Backdrop />
             </div>
-            <div className="eventsblog">
+            <div className="eventsblog mb-5">
                 {
                     eventsdata.map((ele:events)=>{
-                        
+                        return (
+                            <div style={{
+                                background:"#ccc",
+                                marginLeft:"4rem",
+                                marginRight:"4rem",
+                                marginTop:"2rem"
+                            }}>
+                                <p className="text-center">{ele.title}</p>
+                                <div style={{display:"flex",flexWrap:"wrap",
+                                    justifyContent:"space-around",margin:"1rem auto"
+                                    }}>
+                                    <div style={{width:"max-content"}}>
+                                        owner : {ele.userUsername}
+                                    </div>
+                                    <div style={{width:"max-content"}}>
+                                        events = ${ele.price}
+                                    </div>
+                                </div>
+                                <div style={{width:"max-content",margin:"auto"}}>
+                                        eventdate = {ele.date}
+                                </div>
+                                <div style={{width:"max-content",margin:"auto",padding:"1rem"}}>
+                                    <button>booknow</button>
+                                </div>
+                            </div>
+                        )
                     })
                 }
             </div>

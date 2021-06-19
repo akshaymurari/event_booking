@@ -3,11 +3,13 @@ import "./Backdrop.scss";
 import {graphql} from "../../App";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
 const Backdrop = () => { 
     let currenttime = new Date();
+    const dispatch = useDispatch();
     const H = useHistory();
     // console.log(currenttime);
-    let time:string = currenttime.toISOString().slice(0, 10)+"T"+currenttime.getHours()+":"+currenttime.getMinutes()+":"+currenttime.getSeconds();
+    let time:string = currenttime.toISOString().slice(0, 10)+" "+currenttime.getHours()+":"+currenttime.getMinutes()+":"+currenttime.getSeconds();
     // console.log(time);
     const [data,setdata] = React.useState({
         userUsername:"",
@@ -61,6 +63,7 @@ const Backdrop = () => {
             }
             else{
                 console.log(result.data.data);
+                dispatch({payload:[result.data.data],type:"addevent"})
             }
         }catch(error){
             console.log(error);
