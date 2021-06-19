@@ -51,6 +51,7 @@ const Events = () => {
                 }
                 else{
                     dispatch({payload:result.data.data.event,type:"addallevents"});
+
                 }
             }catch(error){
                 console.log(error);
@@ -59,6 +60,42 @@ const Events = () => {
         }
         getevents();
     },[]);
+    const booknow = async (ele:events) => {
+        try{
+            const body = {
+                query : `
+                    mutation {
+                        createBooking(book:{
+                            eventId:"${ele.id}",
+                            userUsername:"${ele.userUsername}"
+                            token:"${localStorage.getItem("token")}"
+                        }){
+                            id
+                        }
+                    }
+                `
+            }
+            const result = await axios({
+                url:graphql,
+                method:"post",
+                data:JSON.stringify(body),
+                headers:{
+                    accept:"application/json",
+                    "Content-Type":"application/json"
+                }
+            });
+            console.log(result);
+            if(result.data.error){
+                console.log("error");
+            }
+            else{
+                console.log(result.data.data.createBooking);
+                dispatch({payload:[result.data.data.createBooking],type:"addbookings"});
+            }
+        }catch(error){
+            console.log(error);
+        }
+    }
     return (
         <div>
             <h1>in events</h1>
@@ -106,7 +143,9 @@ const Events = () => {
                                         eventdate = {ele.date}
                                 </div>
                                 <div style={{width:"max-content",margin:"auto",padding:"1rem"}}>
-                                    <button>booknow</button>
+                                    <button onClick={
+                                        ()=>booknow(ele)
+                                    }>booknow</button>
                                 </div>
                                 <p className="text-center pb-3">{ele.description}</p>
                             </div>

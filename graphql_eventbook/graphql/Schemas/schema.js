@@ -19,8 +19,9 @@ const schema = buildSchema(`
         userUsername:String!
     }
     input BookingInput{
-        eventId:Int!,
+        eventId:String!
         userUsername:String!
+        token:String!
     }
     type User{
         username:String!
@@ -50,12 +51,24 @@ const schema = buildSchema(`
         user : [UserEvents!]!
         book : [Booking!]!
     }
+    type EventB{
+        id:ID!
+        owner:String!
+        title:String!
+        description:String!
+        date:String!
+    }
+    type BookingDetails{
+        id:ID!,
+        event:EventB!
+    }
     type create{
         create(event:InputEvent):Event
         createUser(user:UserInput):login
         createBooking(book:BookingInput):Booking
         cancelbooking(cancel:cancelbooking):Boolean
         login(login:UserInput):login
+        getmybookings(token:String!):[BookingDetails!]
     }
     schema {
         query:query,

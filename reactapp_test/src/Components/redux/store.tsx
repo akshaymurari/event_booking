@@ -1,8 +1,9 @@
-import {EventReducer} from "./reducers";
+import {EventReducer,BookingReducer} from "./reducers";
 import {createStore,combineReducers} from "redux";
 
 const reducers = combineReducers({
-    EventReducer
+    EventReducer,
+    BookingReducer
 });
 
 export const store = createStore(reducers);

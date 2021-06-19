@@ -50,7 +50,8 @@ const login = async (args) => {
     }
   });
   console.log(data);
-  const token = await jwt.sign({...args.user},process.env.secret_key);
+  console.log({...args.login})
+  const token = await jwt.sign({...args.login},process.env.secret_key);
   if(data){
     return {
       token,
