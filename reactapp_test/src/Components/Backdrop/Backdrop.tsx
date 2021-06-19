@@ -40,6 +40,8 @@ const Backdrop = () => {
                             userUsername:"${data.userUsername}"
                             token:"${localStorage.getItem('token')}"
                         }){
+                            id
+                            userUsername
                             title
                             description
                             price
@@ -63,7 +65,7 @@ const Backdrop = () => {
             }
             else{
                 console.log(result.data.data);
-                dispatch({payload:[result.data.data],type:"addevent"})
+                dispatch({payload:[result.data.data.create],type:"addevent"})
             }
         }catch(error){
             console.log(error);

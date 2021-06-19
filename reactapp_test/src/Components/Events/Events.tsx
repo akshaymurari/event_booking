@@ -108,6 +108,7 @@ const Events = () => {
                                 <div style={{width:"max-content",margin:"auto",padding:"1rem"}}>
                                     <button>booknow</button>
                                 </div>
+                                <p className="text-center pb-3">{ele.description}</p>
                             </div>
                         )
                     })
