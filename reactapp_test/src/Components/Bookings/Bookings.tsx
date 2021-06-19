@@ -7,6 +7,7 @@ import {graphql} from "../../App";
 const Bookings = () => {
   const bookings = useSelector((state: rootstate) => state.BookingReducer);
   const dispatch = useDispatch();
+  console.log(bookings);
   interface bookings {
     id: string;
     event:{
@@ -54,7 +55,39 @@ const Bookings = () => {
           }
       }
       getbookings();
-  },[])
+  },[]);
+  const cancelbooking = async (id:string|number) => {
+      try{
+          const body = {
+              query : ` 
+                mutation {
+                    cancelbooking(cancel:{
+                        id:"${id}"
+                    })
+                }
+              `
+          }
+          const result = await axios({
+              url:graphql,
+              method:"post",
+              headers:{
+                  "accept":"application/json",
+                  "Content-Type": "application/json",
+                  'Authorization':"Berear "+localStorage.getItem("token")
+              },
+              data:JSON.stringify(body)
+          });
+          console.log(result);
+          const data = bookings.filter((ele:bookings)=>{
+              return (ele.id!=id)
+          });
+          if(result.data.data.cancelbooking){
+              dispatch({payload:data,type:"addallbookings"});
+          }
+      }catch(error){
+          console.log(error);
+      }
+  }
   return (
     <div>
       <h1>in bookings</h1>
@@ -84,9 +117,9 @@ const Bookings = () => {
               style={{ width: "max-content", margin: "auto", padding: "1rem" }}
             >
               <button
-                // onClick={
-                //   // ()=>booknow(ele)
-                // }
+                onClick={
+                  ()=>cancelbooking(ele.id)
+                }
               >
                 cancelbooking
               </button>

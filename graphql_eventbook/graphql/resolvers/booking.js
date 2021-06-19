@@ -25,18 +25,23 @@ const createBooking = async (args) => {
     }
 }
 
-const cancelbooking = async (args) => {
-    try{        
-        const data = await bookings.destroy({
-            where:{
-                ...args.cancel
-            }
-        });
-        console.log(data);
-        return true;
-    }catch(error){
-        console.log(error);
-        return false;
+const cancelbooking = async (args,req) => {
+    console.log(req.get("Authorization"));
+    if(require("./auth")(req.get("Authorization").split(" ")[1])){
+        try{        
+            const data = await bookings.destroy({
+                where:{
+                    ...args.cancel
+                }
+            });
+            console.log(data);
+            return true;
+        }catch(error){
+            console.log(error);
+            return false;
+        }
+    }else{
+        throw new Error("invalid token");
     }
 
 }
