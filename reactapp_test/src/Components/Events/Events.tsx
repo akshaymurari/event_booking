@@ -64,16 +64,21 @@ const Events = () => {
         try{
             const body = {
                 query : `
-                    mutation {
+                    mutation create($eventId:String!,$userUsername:String!,$token:String!) {
                         createBooking(book:{
-                            eventId:"${ele.id}",
-                            userUsername:"${ele.userUsername}"
-                            token:"${localStorage.getItem("token")}"
+                            eventId:$eventId,
+                            userUsername:$userUsername
+                            token:$token
                         }){
                             id
                         }
                     }
-                `
+                `,
+                variables : {
+                    eventId:ele.id,
+                    userUsername:ele.userUsername,
+                    token:localStorage.getItem("token")
+                }
             }
             const result = await axios({
                 url:graphql,

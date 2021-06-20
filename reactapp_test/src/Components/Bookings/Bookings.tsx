@@ -60,12 +60,15 @@ const Bookings = () => {
       try{
           const body = {
               query : ` 
-                mutation {
+                mutation create($id:ID!) {
                     cancelbooking(cancel:{
-                        id:"${id}"
+                        id:$id
                     })
                 }
-              `
+              `,
+              variables: {
+                id
+              }
           }
           const result = await axios({
               url:graphql,
