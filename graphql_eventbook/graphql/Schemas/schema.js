@@ -13,6 +13,10 @@ const schema = buildSchema(`
         price:Float!
         date:String!
     }
+    type link{
+        id:ID!
+        userUsername:String
+    }
     type Booking{
         id:ID,
         eventId:Int!,
@@ -50,6 +54,7 @@ const schema = buildSchema(`
         event : [Event!]!
         user : [UserEvents!]!
         book : [Booking!]!
+        link:[link!]!
     }
     type EventB{
         id:ID!

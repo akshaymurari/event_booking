@@ -19,6 +19,8 @@ const events = require("../models/events")(sequelize, DataTypes);
 const users = require("../models/users")(sequelize, DataTypes);
 db.bookings = require("../models/bookings")(sequelize);
 
+db.links = require("../models/link")(sequelize, DataTypes);
+
 users.hasMany(events);
 
 events.belongsTo(users);
@@ -34,6 +36,9 @@ db.bookings.belongsTo(users);
 
 db.bookings.belongsTo(events);
 
+db.users.hasMany(db.links);
+
+db.links.belongsTo(db.users);
 
 sequelize
   .sync()

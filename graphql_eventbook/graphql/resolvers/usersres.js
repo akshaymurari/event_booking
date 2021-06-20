@@ -4,6 +4,23 @@ const { Sequelize, DataTypes, Op } = require("sequelize");
 
 const jwt = require("jsonwebtoken");
 
+const DataLoader = require('dataloader')
+
+const linksLoader = new DataLoader(async ele=>{
+  console.log(ele.userUsername);
+  const result = await db.users.findAll({
+    where:{
+      username:{
+        [Op.in]:ele.userUsername
+      }
+    },
+    raw:true
+  });
+  console.log("result in data loader")
+  console.log(result);
+  return result;
+})
+
 const getusers = async () => {
     console.log("hello")
     const data = await db.users.findAll({
@@ -62,4 +79,23 @@ const login = async (args) => {
   }
 }
 
-module.exports = {getusers, createusers,login};
+const link = async () => {
+  try{
+    const links = await db.links.findAll({
+      raw:true
+    });
+    console.log(links);
+    links.map((ele)=>{
+      console.log(ele);
+      linksLoader.load(ele).then((res)=>{
+        console.log("final data",res)
+      });
+     });
+  }
+  catch(error){
+    console.log(error);
+  }
+
+}
+
+module.exports = {getusers, createusers,login,link};
