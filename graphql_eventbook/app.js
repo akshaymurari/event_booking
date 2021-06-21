@@ -20,6 +20,8 @@ const app = express();
 
 app.use(cors());
 
+app.use(require("./graphql/resolvers/multipledata"));
+
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.send("hello");
 });
+
 
 app.listen(8000, (error) => {
     console.log(error ? error : "listnening to port 8000");

@@ -1,5 +1,8 @@
 const { buildSchema } = require("graphql");
 
+const getalinasync = `
+`
+
 const schema = buildSchema(`
     type login {
         username:String!
@@ -50,11 +53,25 @@ const schema = buildSchema(`
     input cancelbooking {
         id:ID!
     }
+    type User1{
+        username:String
+        password:String
+    }
+    type getall {
+       users : [User1!]!
+       events : [Event!]!
+       bookings : [Booking!]!
+    }
+    type all{
+        users:[User1!]!
+    }
     type query{
         event : [Event!]!
         user : [UserEvents!]!
         book : [Booking!]!
         link:[link!]!
+        all:getall!
+        getallinasync:getall!
     }
     type EventB{
         id:ID!
